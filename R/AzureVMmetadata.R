@@ -15,6 +15,8 @@ ev_api_version <- "2017-11-01"
 #' @return
 #' The updating functions return the contents of their respective environments as lists, invisibly.
 #' @seealso
+#' [is_azure_vm]
+#'
 #' [Instance metadata service documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service)
 #'
 #' To obtain OAuth tokens from the metadata service, see [AzureAuth::get_managed_token]
