@@ -4,16 +4,33 @@ att_api_version <- "2018-10-01"
 ev_api_version <- "2017-11-01"
 
 
+#' Metadata for an Azure VM
+#'
+#' @param nonce For `update_attested_metadata`, an optional string to use as a nonce.
+#' @details
+#' The `instance`, `attested` and `events` objects are environments containing the instance metadata, attested document, and scheduled events respectively for a VM running in Azure. `instance` and `attested` are automatically populated when you load the AzureVMmetadata package, or you can manually populate them yourself with the `update_instance_metadata` and `update_attested_metadata` functions. `events` is not populated at package startup, because calling the scheduled event service can require up to several minutes if it is not running already. You can manually populate it with the `update_scheduled_events` function.
+#'
+#' @return
+#' The updating functions return lists of metadata items, invisibly.
+#' @seealso
+#' [Instance metadata service documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service)
+#'
+#' To obtain OAuth tokens from the metadata service, see [AzureAuth::get_managed_token]
+#'
+#' @rdname metadata
 #' @export
 instance <- new.env()
 
+#' @rdname metadata
 #' @export
 attested <- new.env()
 
+#' @rdname metadata
 #' @export
 events <- new.env()
 
 
+#' @rdname metadata
 #' @export
 update_instance_metadata <- function()
 {
@@ -31,6 +48,7 @@ update_instance_metadata <- function()
 }
 
 
+#' @rdname metadata
 #' @export
 update_attested_metadata <- function(nonce=NULL)
 {
@@ -48,6 +66,7 @@ update_attested_metadata <- function(nonce=NULL)
 }
 
 
+#' @rdname metadata
 #' @export
 update_scheduled_events <- function()
 {
@@ -68,7 +87,7 @@ update_scheduled_events <- function()
 #' Check if R is running in an Azure VM
 #' @param nonce An optional string to use as a nonce.
 #' @details
-#' These functions check if R is running in an Azure VM by attempting to contact the instance metadata host. `in_azure_vm` simply returns TRUE or FALSE based on whether it succeeds. `get_vm_cert` provides a stronger check, by retrieving the VM's certificate and throwing an error if this is not found. Note that you should still verify the certificate's authenticity.
+#' These functions check if R is running in an Azure VM by attempting to contact the instance metadata host. `in_azure_vm` simply returns TRUE or FALSE based on whether it succeeds. `get_vm_cert` provides a stronger check, by retrieving the VM's certificate and throwing an error if this is not found. Note that you should still verify the certificate's authenticity before relying on it.
 #' @return
 #' For `in_azure_vm`, a boolean. For `get_vm_cert`, a PKCS-7 certificate object.
 #' @export
