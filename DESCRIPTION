@@ -1,0 +1,23 @@
+Package: AzureVMmetadata
+Title: Interface to Azure virtual machine instance metadata
+Version: 0.0.1
+Authors@R: c(
+    person("Hong", "Ooi", , "hongooi@microsoft.com", role = c("aut", "cre")),
+    person("Microsoft", role="cph")
+    )
+Description: A simple interface to the instance metadata inside a virtual machine running in Microsoft's 'Azure' cloud. Part of the 'AzureR' family of packages.
+URL: https://github.com/Azure/AzureVMmetadata https://github.com/Azure/AzureR
+BugReports: https://github.com/Azure/AzureVMmetadata/issues
+License: MIT + file LICENSE
+VignetteBuilder: knitr
+Depends: 
+    R (>= 3.3)
+Imports: 
+    openssl,
+    httr (>= 1.3)
+Suggests:
+    knitr,
+    testthat,
+    AzureAuth
+Roxygen: list(markdown=TRUE)
+RoxygenNote: 6.1.1
