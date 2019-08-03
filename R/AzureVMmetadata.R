@@ -1,4 +1,4 @@
-host <- httr::parse_url("http://169.254.169.254")
+metadata_host <- httr::parse_url("http://169.254.169.254")
 inst_api_version <- "2019-02-01"
 att_api_version <- "2018-10-01"
 ev_api_version <- "2017-11-01"
@@ -17,9 +17,9 @@ events <- new.env()
 #' @export
 update_instance_metadata <- function()
 {
-    host$path <- "metadata/instance"
-    host$query <- list(`api-version`=att_api_version)
-    res <- try(httr::GET(host, httr::add_headers(metadata=TRUE)), silent=TRUE)
+    metadata_host$path <- "metadata/instance"
+    metadata_host$query <- list(`api-version`=att_api_version)
+    res <- try(httr::GET(metadata_host, httr::add_headers(metadata=TRUE)), silent=TRUE)
 
     if(!inherits(res, "response") || res$status_code > 299)
         return(NULL)
@@ -34,9 +34,9 @@ update_instance_metadata <- function()
 #' @export
 update_attested_metadata <- function(nonce=NULL)
 {
-    host$path <- "metadata/attested/document"
-    host$query <- list(`api-version`=att_api_version)
-    res <- try(httr::GET(host, httr::add_headers(metadata=TRUE, nonce=nonce)), silent=TRUE)
+    metadata_host$path <- "metadata/attested/document"
+    metadata_host$query <- list(`api-version`=att_api_version, nonce=nonce)
+    res <- try(httr::GET(metadata_host, httr::add_headers(metadata=TRUE)), silent=TRUE)
 
     if(!inherits(res, "response") || res$status_code > 299)
         return(NULL)
@@ -51,9 +51,9 @@ update_attested_metadata <- function(nonce=NULL)
 #' @export
 update_scheduled_events <- function()
 {
-    host$path <- "metadata/scheduledevents"
-    host$query <- list(`api-version`=ev_api_version)
-    res <- try(httr::GET(host, httr::add_headers(metadata=TRUE)), silent=TRUE)
+    metadata_host$path <- "metadata/scheduledevents"
+    metadata_host$query <- list(`api-version`=ev_api_version)
+    res <- try(httr::GET(metadata_host, httr::add_headers(metadata=TRUE)), silent=TRUE)
 
     if(!inherits(res, "response") || res$status_code > 299)
         return(NULL)
@@ -65,22 +65,29 @@ update_scheduled_events <- function()
 }
 
 
-
-#' @export
-get_vm_cert <- function()
-{
-    if(is.null(attested$signature))
-        return(NULL)
-
-    openssl::read_p7b(openssl::base64_decode(attested$signature))[[1]]
-}
-
-
+#' Check if R is running in an Azure VM
+#' @param nonce An optional string to use as a nonce.
+#' @details
+#' These functions check if R is running in an Azure VM by attempting to contact the instance metadata host. `in_azure_vm` simply returns TRUE or FALSE based on whether it succeeds. `get_vm_cert` provides a stronger check, by retrieving the VM's certificate and throwing an error if this is not found. Note that you should still verify the certificate's authenticity.
+#' @return
+#' For `in_azure_vm`, a boolean. For `get_vm_cert`, a PKCS-7 certificate object.
 #' @export
 in_azure_vm <- function()
 {
-    obj <- try(httr::GET(host), silent=TRUE)
+    obj <- try(httr::GET(metadata_host), silent=TRUE)
     inherits(obj, "response") && httr::status_code(obj) == 400
+}
+
+
+#' @rdname in_azure_vm
+#' @export
+get_vm_cert <- function(nonce=NULL)
+{
+    update_attested_metadata(nonce)
+    if(is.null(attested$signature))
+        stop("No certificate found", call.=FALSE)
+
+    openssl::read_p7b(openssl::base64_decode(attested$signature))[[1]]
 }
 
 
@@ -89,4 +96,5 @@ in_azure_vm <- function()
     update_instance_metadata()
     update_attested_metadata()
 }
+
 
