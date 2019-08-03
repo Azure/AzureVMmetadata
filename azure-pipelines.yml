@@ -1,0 +1,12 @@
+trigger:
+- master
+
+variables:
+- group: GH
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: 'git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*'
+  displayName: 'copy to cloudyr'
