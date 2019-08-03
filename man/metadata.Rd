@@ -27,13 +27,15 @@ update_scheduled_events()
 \item{nonce}{For \code{update_attested_metadata}, an optional string to use as a nonce.}
 }
 \value{
-The updating functions return lists of metadata items, invisibly.
+The updating functions return the contents of their respective environments as lists, invisibly.
 }
 \description{
 Metadata for an Azure VM
 }
 \details{
 The \code{instance}, \code{attested} and \code{events} objects are environments containing the instance metadata, attested document, and scheduled events respectively for a VM running in Azure. \code{instance} and \code{attested} are automatically populated when you load the AzureVMmetadata package, or you can manually populate them yourself with the \code{update_instance_metadata} and \code{update_attested_metadata} functions. \code{events} is not populated at package startup, because calling the scheduled event service can require up to several minutes if it is not running already. You can manually populate it with the \code{update_scheduled_events} function.
+
+If AzureVMmetadata is loaded in an R session that is \emph{not} running in an Azure VM, all the metadata environments will be empty.
 }
 \seealso{
 \href{https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service}{Instance metadata service documentation}
