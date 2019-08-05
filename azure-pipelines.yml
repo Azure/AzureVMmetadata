@@ -3,10 +3,35 @@ trigger:
 
 variables:
 - group: GH
+- name: R_LIBS_USER
+  value: '$(Agent.BuildDirectory)/R/library'
+- name: containerImage
+  value: 'rocker/r-base:latest'
 
 pool:
   vmImage: 'ubuntu-latest'
+  container: $[ variables['containerImage'] ]
 
 steps:
 - script: 'git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*'
-  displayName: 'copy to cloudyr'
+  displayName: 'Copying to cloudyr'
+- script: |
+    echo 'options(repos = "https://cloud.r-project.org")' > ~/.Rprofile
+    mkdir -p ${R_LIBS_USER}
+    sudo apt-get update && sudo apt-get install -y libxml2-dev libssl-dev
+  displayName: 'Installing R'
+- task: CacheBeta@0
+  inputs:
+    key: |
+      ./DESCRIPTION
+      "$(Agent.JobName)"
+    path: $(R_LIBS_USER)
+  displayName: 'Caching packages'
+  continueOnError: true
+- bash: |
+    Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
+    Rscript -e "remotes::install_deps(dependencies = TRUE)"
+  displayName: 'Installing package dependencies'
+- bash: |
+    Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'error', check_dir = 'check')"
+  displayName: 'Checking package'
