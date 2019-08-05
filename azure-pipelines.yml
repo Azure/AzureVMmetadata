@@ -9,7 +9,7 @@ variables:
 pool:
   vmImage: 'ubuntu-latest'
 
-container: rocker/r-base:latest
+container: rocker/rstudio:latest
 
 steps:
 - script: 'git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*'
