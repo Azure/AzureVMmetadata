@@ -42,7 +42,7 @@ If AzureVMmetadata is loaded in an R session that is \emph{not} running in an Az
 ## these will only be meaningful when run in an Azure VM
 
 # all compute metadata
-as.list(AzureVMmetadata::instance$compute)
+AzureVMmetadata::instance$compute
 
 # VM name and ID
 AzureVMmetadata::instance$compute$name
@@ -54,14 +54,14 @@ AzureVMmetadata::instance$compute$resourceGroupName
 AzureVMmetadata::instance$compute$resourceId
 
 # all network metadata
-as.list(AzureVMmetadata::instance$network)
+AzureVMmetadata::instance$network
 
-# IP address details (IPv4)
-AzureVMmetadata::instance$network$interface$ipv4
+# IPv4 address details (1st network interface)
+AzureVMmetadata::instance$network$interface[[1]]$ipv4
 
 }
 \seealso{
-\link{is_azure_vm}
+\link{in_azure_vm}
 
 \href{https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service}{Instance metadata service documentation}
 
