@@ -12,7 +12,7 @@ pool:
 container: rocker/r-base:latest
 
 steps:
-- bash: |
+- script: |
     echo 'options(repos = "https://cloud.r-project.org")' > ~/.Rprofile
     mkdir -p ${R_LIBS_USER}
     sudo apt-get update && sudo apt-get install -y libxml2-dev libssl-dev git-core
