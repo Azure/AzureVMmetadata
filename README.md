@@ -1,6 +1,6 @@
 # AzureVMmetadata
 
-A simple package to access the instance metadata service in an Azure virtual machine.
+A simple package to access the [instance metadata service](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service) in an Azure virtual machine.
 
 ## Accessing metadata
 
