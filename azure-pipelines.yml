@@ -4,7 +4,7 @@ trigger:
 variables:
 - group: GH
 - name: R_LIBS_USER
-  value: '$(Agent.BuildDirectory)/R/library'
+  value: '~/R/library'
 - name: containerImage
   value: rocker/rstudio:latest
 
