@@ -5,12 +5,11 @@ variables:
 - group: GH
 - name: R_LIBS_USER
   value: '$(Agent.BuildDirectory)/R/library'
-- name: containerImage
-  value: 'rocker/r-base:latest'
 
 pool:
   vmImage: 'ubuntu-latest'
-  container: $[ variables['containerImage'] ]
+
+container: rocker/r-base:latest
 
 steps:
 - script: 'git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*'
