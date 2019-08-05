@@ -17,20 +17,22 @@ steps:
     echo ${R_LIBS_USER}
     mkdir -p ${R_LIBS_USER}
   displayName: 'Setup R library directory'
+
 - bash: 'git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*'
   displayName: 'Copying to cloudyr'
+
 - task: CacheBeta@0
   inputs:
-    key: |
-      ./DESCRIPTION
-      $(Agent.JobName)
+    key: ./DESCRIPTION $(Agent.JobName)
     path: $(R_LIBS_USER)
   displayName: 'Caching packages'
   continueOnError: true
+
 - bash: |
-    Rscript -e "install.packages(c('remotes', 'rcmdcheck'), lib='${R_LIBS_USER}')"
-    Rscript -e "remotes::install_deps(dependencies=TRUE, lib='${R_LIBS_USER}')"
+    Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
+    Rscript -e "remotes::install_deps(dependencies=TRUE)"
   displayName: 'Installing package dependencies'
+
 - bash: |
     Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'error', check_dir = 'check')"
   displayName: 'Checking package'
