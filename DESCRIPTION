@@ -5,7 +5,7 @@ Authors@R: c(
     person("Hong", "Ooi", , "hongooi@microsoft.com", role = c("aut", "cre")),
     person("Microsoft", role="cph")
     )
-Description: A simple interface to the instance metadata inside a virtual machine running in Microsoft's 'Azure' cloud. Part of the 'AzureR' family of packages.
+Description: A simple interface to the instance metadata for a virtual machine running in Microsoft's 'Azure' cloud. Part of the 'AzureR' family of packages.
 URL: https://github.com/Azure/AzureVMmetadata https://github.com/Azure/AzureR
 BugReports: https://github.com/Azure/AzureVMmetadata/issues
 License: MIT + file LICENSE
