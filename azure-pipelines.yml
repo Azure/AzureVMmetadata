@@ -33,6 +33,7 @@ steps:
   continueOnError: true
 
 - bash: |
+    Rscript -e "print(Sys.getenv('R_LIBS_USER'))"
     Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
     Rscript -e "remotes::install_deps(dependencies=TRUE)"
   displayName: 'Installing package dependencies'
