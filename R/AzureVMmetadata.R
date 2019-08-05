@@ -21,6 +21,28 @@ ev_api_version <- "2017-11-01"
 #'
 #' To obtain OAuth tokens from the metadata service, see [AzureAuth::get_managed_token]
 #'
+#' @examples
+#'
+#' ## these will only be meaningful when run in an Azure VM
+#'
+#' # all compute metadata
+#' as.list(AzureVMmetadata::instance$compute)
+#'
+#' # VM name and ID
+#' AzureVMmetadata::instance$compute$name
+#' AzureVMmetadata::instance$compute$vmId
+#'
+#' # VM resource details: subscription, resource group, ID
+#' AzureVMmetadata::instance$compute$subscriptionId
+#' AzureVMmetadata::instance$compute$resourceGroupName
+#' AzureVMmetadata::instance$compute$resourceId
+#'
+#' # all network metadata
+#' as.list(AzureVMmetadata::instance$network)
+#'
+#' # IP address details (IPv4)
+#' AzureVMmetadata::instance$network$interface$ipv4
+#'
 #' @rdname metadata
 #' @export
 instance <- new.env()

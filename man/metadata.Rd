@@ -33,11 +33,36 @@ The updating functions return the contents of their respective environments as l
 Metadata for an Azure VM
 }
 \details{
-The \code{instance}, \code{attested} and \code{events} objects are environments containing the instance metadata, attested document, and scheduled events respectively for a VM running in Azure. \code{instance} and \code{attested} are automatically populated when you load the AzureVMmetadata package, or you can manually populate them yourself with the \code{update_instance_metadata} and \code{update_attested_metadata} functions. \code{events} is not populated at package startup, because calling the scheduled event service can require up to several minutes if it is not running already. You can manually populate it with the \code{update_scheduled_events} function.
+The \code{instance}, \code{attested} and \code{events} objects are environments containing the instance metadata, attested metadata, and scheduled events respectively for a VM running in Azure. \code{instance} and \code{attested} are automatically populated when you load the AzureVMmetadata package, or you can manually populate them yourself with the \code{update_instance_metadata} and \code{update_attested_metadata} functions. \code{events} is not populated at package startup, because calling the scheduled event service can require up to several minutes if it is not running already. You can manually populate it with the \code{update_scheduled_events} function.
 
 If AzureVMmetadata is loaded in an R session that is \emph{not} running in an Azure VM, all the metadata environments will be empty.
 }
+\examples{
+
+## these will only be meaningful when run in an Azure VM
+
+# all compute metadata
+as.list(AzureVMmetadata::instance$compute)
+
+# VM name and ID
+AzureVMmetadata::instance$compute$name
+AzureVMmetadata::instance$compute$vmId
+
+# VM resource details: subscription, resource group, ID
+AzureVMmetadata::instance$compute$subscriptionId
+AzureVMmetadata::instance$compute$resourceGroupName
+AzureVMmetadata::instance$compute$resourceId
+
+# all network metadata
+as.list(AzureVMmetadata::instance$network)
+
+# IP address details (IPv4)
+AzureVMmetadata::instance$network$interface$ipv4
+
+}
 \seealso{
+\link{is_azure_vm}
+
 \href{https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service}{Instance metadata service documentation}
 
 To obtain OAuth tokens from the metadata service, see \link[AzureAuth:get_managed_token]{AzureAuth::get_managed_token}
