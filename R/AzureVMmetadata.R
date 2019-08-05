@@ -15,7 +15,7 @@ ev_api_version <- "2017-11-01"
 #' @return
 #' The updating functions return the contents of their respective environments as lists, invisibly.
 #' @seealso
-#' [is_azure_vm]
+#' [in_azure_vm]
 #'
 #' [Instance metadata service documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service)
 #'
@@ -26,7 +26,7 @@ ev_api_version <- "2017-11-01"
 #' ## these will only be meaningful when run in an Azure VM
 #'
 #' # all compute metadata
-#' as.list(AzureVMmetadata::instance$compute)
+#' AzureVMmetadata::instance$compute
 #'
 #' # VM name and ID
 #' AzureVMmetadata::instance$compute$name
@@ -38,10 +38,10 @@ ev_api_version <- "2017-11-01"
 #' AzureVMmetadata::instance$compute$resourceId
 #'
 #' # all network metadata
-#' as.list(AzureVMmetadata::instance$network)
+#' AzureVMmetadata::instance$network
 #'
-#' # IP address details (IPv4)
-#' AzureVMmetadata::instance$network$interface$ipv4
+#' # IPv4 address details (1st network interface)
+#' AzureVMmetadata::instance$network$interface[[1]]$ipv4
 #'
 #' @rdname metadata
 #' @export
