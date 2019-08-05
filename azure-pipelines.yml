@@ -5,6 +5,8 @@ variables:
 - group: GH
 - name: R_LIBS_USER
   value: '$(Agent.BuildDirectory)/R/library'
+- name: containerImage
+  value: rocker/rstudio:latest
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -23,7 +25,9 @@ steps:
 
 - task: CacheBeta@0
   inputs:
-    key: ./DESCRIPTION $(Agent.JobName)
+    key: |
+      ./DESCRIPTION
+      "$(containerImage)"
     path: $(R_LIBS_USER)
   displayName: 'Caching packages'
   continueOnError: true
