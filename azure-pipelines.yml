@@ -12,13 +12,12 @@ pool:
 container: rocker/rstudio:latest
 
 steps:
-- script: 'git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*'
+- bash: 'git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*'
   displayName: 'Copying to cloudyr'
-- script: |
+- bash: |
     echo 'options(repos = "https://cloud.r-project.org")' > ~/.Rprofile
     mkdir -p ${R_LIBS_USER}
-    sudo apt-get update && sudo apt-get install -y libxml2-dev libssl-dev
-  displayName: 'Installing R'
+  displayName: 'Setup R library directory'
 - task: CacheBeta@0
   inputs:
     key: |
