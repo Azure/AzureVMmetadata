@@ -31,7 +31,7 @@ AzureVMmetadata::instance$compute$resourceId
 AzureVMmetadata::instance$network
 
 # IPv4 address details (1st network interface)
-AzureVMmetadata::instance$network$interface$ipv4
+AzureVMmetadata::instance$network$interface[[1]]$ipv4
 
 # raw PKCS-7 certificate for the VM
 AzureVMmetadata::attested$signature
