@@ -23,14 +23,14 @@ steps:
 - bash: 'git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*'
   displayName: 'Copying to cloudyr'
 
-- task: CacheBeta@0
-  inputs:
-    key: |
-      ./DESCRIPTION
-      "$(containerImage)"
-    path: $(R_LIBS_USER)
-  displayName: 'Caching packages'
-  continueOnError: true
+#- task: CacheBeta@0
+#  inputs:
+#    key: |
+#      ./DESCRIPTION
+#      "$(containerImage)"
+#    path: $(R_LIBS_USER)
+#  displayName: 'Caching packages'
+#  continueOnError: true
 
 - bash: |
     Rscript -e "print(Sys.getenv('R_LIBS_USER'))"
