@@ -23,8 +23,6 @@ ev_api_version <- "2017-11-01"
 #'
 #' @examples
 #'
-#' foo
-#'
 #' ## these will only be meaningful when run in an Azure VM
 #'
 #' # all compute metadata
