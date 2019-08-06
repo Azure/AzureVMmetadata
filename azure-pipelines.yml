@@ -22,10 +22,9 @@ steps:
 
 - task: CacheBeta@0
   inputs:
-    key: ./DESCRIPTION $(containerImage)
+    key: $(containerImage)
     path: $(R_LIBS_USER)
   displayName: 'Caching packages'
-  continueOnError: true
 
 - bash: |
     Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
