@@ -39,6 +39,8 @@ If AzureVMmetadata is loaded in an R session that is \emph{not} running in an Az
 }
 \examples{
 
+warning("this is a warning!")
+
 ## these will only be meaningful when run in an Azure VM
 
 # all compute metadata
