@@ -24,7 +24,7 @@ update_attested_metadata(nonce = NULL)
 update_scheduled_events()
 }
 \arguments{
-\item{non}{For \code{update_attested_metadata}, an optional string to use as a nonce.}
+\item{nonce}{For \code{update_attested_metadata}, an optional string to use as a nonce.}
 }
 \value{
 The updating functions return the contents of their respective environments as lists, invisibly.
@@ -38,8 +38,6 @@ The \code{instance}, \code{attested} and \code{events} objects are environments 
 If AzureVMmetadata is loaded in an R session that is \emph{not} running in an Azure VM, all the metadata environments will be empty.
 }
 \examples{
-
-warning("warning!")
 
 ## these will only be meaningful when run in an Azure VM
 
