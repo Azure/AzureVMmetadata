@@ -6,7 +6,7 @@ variables:
 - name: R_LIBS_USER
   value: '$(Agent.BuildDirectory)/R/library'
 - name: containerImage
-  value: 'ubuntu-latest'
+  value: 'rocker/rstudio:latest'
 
 pool:
   vmImage: 'ubuntu-latest'
