@@ -34,5 +34,5 @@ steps:
   displayName: 'Installing package dependencies'
 
 - bash: |
-    Rscript -e "rcmdcheck::rcmdcheck(args='--no-manual', error_on=c('error', 'warning'), check_dir='check')"
+    Rscript -e "rcmdcheck::rcmdcheck(args='--no-manual', error_on='warning', check_dir='check')"
   displayName: 'Checking package'
