@@ -1,5 +1,5 @@
 trigger:
-- master
+- pipeline-testing
 
 variables:
 - group: GH
@@ -18,19 +18,9 @@ steps:
     echo 'options(repos = "https://cloud.r-project.org")' > ~/.Rprofile
     echo $(R_LIBS_USER)
     mkdir -p $(R_LIBS_USER)
+    ls -al $(Agent.BuildDirectory)
+    ls -al $R_LIBS_USER
   displayName: 'Setup R library directory'
-
-- bash: 'git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*'
-  displayName: 'Copying to cloudyr'
-
-#- task: CacheBeta@0
-#  inputs:
-#    key: |
-#      ./DESCRIPTION
-#      "$(containerImage)"
-#    path: $(R_LIBS_USER)
-#  displayName: 'Caching packages'
-#  continueOnError: true
 
 - bash: |
     Rscript -e "print(Sys.getenv('R_LIBS_USER'))"
