@@ -22,7 +22,9 @@ steps:
 
 - task: CacheBeta@0
   inputs:
-    key: "$(containerImage)"
+    key: |
+      ./DESCRIPTION
+      "$(containerImage)"
     path: $(R_LIBS_USER)
   displayName: 'Caching packages'
 
