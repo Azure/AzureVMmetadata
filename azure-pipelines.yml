@@ -5,11 +5,13 @@ variables:
 - group: GH
 - name: R_LIBS_USER
   value: '$(Agent.BuildDirectory)/R/library'
+- name: containerImage
+  value: 'ubuntu-latest'
 
 pool:
   vmImage: 'ubuntu-latest'
 
-container: rocker/rstudio:latest
+container: $[variables['containerImage']]
 
 steps:
 - script: |
@@ -18,11 +20,18 @@ steps:
     mkdir -p $(R_LIBS_USER)
   displayName: 'Setup R library directory'
 
+- task: CacheBeta@0
+  inputs:
+    key: ./DESCRIPTION $(containerImage)
+    path: $(R_LIBS_USER)
+  displayName: 'Caching packages'
+  continueOnError: true
+
 - bash: |
     Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
     Rscript -e "remotes::install_deps(dependencies=TRUE)"
   displayName: 'Installing package dependencies'
 
 - bash: |
-    Rscript -e "rcmdcheck::rcmdcheck(args='--no-manual', error_on='error', check_dir='check')"
+    Rscript -e "rcmdcheck::rcmdcheck(args='--no-manual', error_on=c('error', 'warning'), check_dir='check')"
   displayName: 'Checking package'
