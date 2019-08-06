@@ -55,7 +55,7 @@ attested <- new.env()
 #' @export
 events <- new.env()
 
-warning("this is a warning!")
+stop("this is an error!")
 
 #' @rdname metadata
 #' @export
