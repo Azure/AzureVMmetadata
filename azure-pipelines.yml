@@ -14,7 +14,7 @@ pool:
 container: $[variables['containerImage']]
 
 steps:
-- script: |
+- bash: |
     echo 'options(repos = "https://cloud.r-project.org")' > ~/.Rprofile
     echo ".libPaths(c('$R_LIBS_USER', .libPaths()))" >> ~/.Rprofile
     mkdir -p $(R_LIBS_USER)
