@@ -4,7 +4,7 @@ trigger:
 variables:
 - group: GH
 - name: R_LIBS_USER
-  value: '~/R/library'
+  value: '$(Agent.BuildDirectory)/R/library'
 - name: containerImage
   value: rocker/rstudio:latest
 
@@ -16,8 +16,8 @@ container: rocker/rstudio:latest
 steps:
 - script: |
     echo 'options(repos = "https://cloud.r-project.org")' > ~/.Rprofile
-    echo ${R_LIBS_USER}
-    mkdir -p ${R_LIBS_USER}
+    echo $(R_LIBS_USER)
+    mkdir -p $(R_LIBS_USER)
   displayName: 'Setup R library directory'
 
 - bash: 'git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*'
