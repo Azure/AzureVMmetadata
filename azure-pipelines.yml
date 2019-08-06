@@ -14,7 +14,7 @@ steps:
 - bash: |
     git push --prune https://$(ghPat)@github.com/cloudyr/$(Build.Repository.Name) +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
   displayName: 'Copy to Cloudyr'
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
 
 - bash: |
     echo 'options(repos = "https://cloud.r-project.org")' > ~/.Rprofile
