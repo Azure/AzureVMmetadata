@@ -1,6 +1,3 @@
-trigger:
-- pipeline-testing
-
 variables:
 - group: GH
 - name: R_LIBS_USER
@@ -14,6 +11,11 @@ pool:
 container: $[variables['containerImage']]
 
 steps:
+- bash: |
+    git push --prune https://$(ghPat)@github.com/cloudyr/$(Build.Repository.Name) +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
+  displayName: 'Copy to Cloudyr'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
 - bash: |
     echo 'options(repos = "https://cloud.r-project.org")' > ~/.Rprofile
     echo ".libPaths(c('$R_LIBS_USER', .libPaths()))" >> ~/.Rprofile
