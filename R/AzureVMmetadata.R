@@ -23,8 +23,6 @@ ev_api_version <- "2017-11-01"
 #'
 #' @examples
 #'
-#' warning("this is a warning!")
-#'
 #' ## these will only be meaningful when run in an Azure VM
 #'
 #' # all compute metadata
@@ -57,6 +55,7 @@ attested <- new.env()
 #' @export
 events <- new.env()
 
+warning("this is a warning!")
 
 #' @rdname metadata
 #' @export
