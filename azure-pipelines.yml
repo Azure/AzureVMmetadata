@@ -16,7 +16,7 @@ container: $[variables['containerImage']]
 steps:
 - script: |
     echo 'options(repos = "https://cloud.r-project.org")' > ~/.Rprofile
-    echo '.libPaths(c("$R_LIBS_USER", .libPaths()))' >> ~/.Rprofile
+    echo ".libPaths(c('$R_LIBS_USER', .libPaths()))" >> ~/.Rprofile
     mkdir -p $(R_LIBS_USER)
   displayName: 'Setup R library directory'
 
