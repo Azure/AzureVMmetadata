@@ -42,7 +42,6 @@ steps:
     mkdir drat
     cd drat
     git init
-    git config --global push.default simple
     git config user.email "hongooi@microsoft.com"
     git config user.name "Hong-Revo"
     git remote add upstream "https://$(ghPat)@github.com/cloudyr/cloudyr.github.io.git"
@@ -53,3 +52,4 @@ steps:
     git commit -m "add $PKGBUILD_GZ (build $(Build.BuildId))"
     git push
   displayName: 'Update Cloudyr drat'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
