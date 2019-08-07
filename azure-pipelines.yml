@@ -35,7 +35,7 @@ steps:
 
 - bash: |
     Rscript -e "f <- pkgbuild::build(dest_path='$(Build.ArtifactStagingDirectory)'); rcmdcheck::rcmdcheck(f, args='--no-manual', error_on='warning', check_dir='check'); Sys.setenv(PKGBUILD_GZ=f)"
-    echo '##vso[task.setvariable variable=PkgBuild_gz]$PKGBUILD_GZ'
+    echo "##vso[task.setvariable variable=PkgBuild_gz]$PKGBUILD_GZ"
   displayName: 'Checking package'
 
 - bash: |
@@ -43,10 +43,12 @@ steps:
     cd drat
     git init
     git config --global push.default simple
+    git config user.email "hongooi@microsoft.com"
+    git config user.name "Hong-Revo"
     git remote add upstream "https://$(ghPat)@github.com/cloudyr/cloudyr.github.io.git"
     git fetch upstream
     git checkout master
     Rscript -e "drat::insertPackage('$(PkgBuild_gz)', repodir='./drat')"
     git add --all
     git commit -m "add $(PkgBuild_gz) (build $(Build.BuildId))"
-  displayName: 'Update drat repo'
+  displayName: 'Update Cloudyr drat'
