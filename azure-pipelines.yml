@@ -34,7 +34,7 @@ steps:
   displayName: 'Installing package dependencies'
 
 - bash: |
-    Rscript -e "f <- pkgbuild::build(dest_path='$(Build.ArtifactStagingDirectory)'); rcmdcheck::rcmdcheck(f, args='--no-manual', error_on='warning', check_dir='check'); Sys.setenv(PKGBUILD_GZ=f)"
+    Rscript -e "f <- pkgbuild::build(); rcmdcheck::rcmdcheck(f, args='--no-manual', error_on='warning', check_dir='check'); Sys.setenv(PKGBUILD_GZ=f)"
     echo "##vso[task.setvariable variable=PkgBuild_gz]$PKGBUILD_GZ"
   displayName: 'Checking package'
 
