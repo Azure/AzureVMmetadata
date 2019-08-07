@@ -50,5 +50,5 @@ steps:
     Rscript -e "drat::insertPackage('$PKGBUILD_GZ', repodir='./drat')"
     git add --all
     git commit -m "add $PKGBUILD_GZ (build $(Build.BuildId))"
-    #git push
+    git push
   displayName: 'Update Cloudyr drat'
