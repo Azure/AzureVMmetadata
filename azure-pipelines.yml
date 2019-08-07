@@ -34,7 +34,7 @@ steps:
   displayName: 'Installing package dependencies'
 
 - bash: |
-    Rscript -e "f <- pkgbuild::build('$(Build.ArtifactStagingDirectory)'); rcmdcheck::rcmdcheck(f, args='--no-manual', error_on='warning', check_dir='check')"
+    Rscript -e "f <- pkgbuild::build(dest_path='$(Build.ArtifactStagingDirectory)'); rcmdcheck::rcmdcheck(f, args='--no-manual', error_on='warning', check_dir='check')"
   displayName: 'Checking package'
 
 - bash: |
@@ -49,7 +49,7 @@ steps:
     git remote add upstream "https://$(ghPat)@github.com/cloudyr/cloudyr.github.io.git"
     git fetch upstream
     git checkout master
-    Rscript -e "f <- pkgbuild::build('..''); drat::insertPackage(f, repodir='./drat')"
+    Rscript -e "drat::insertPackage($PKGBUILD_GZ, repodir='./drat')"
     git add --all
     git commit -m "add $PKGBUILD_GZ (build $(Build.BuildId))"
   displayName: 'Update Cloudyr drat'
