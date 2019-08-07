@@ -52,4 +52,4 @@ steps:
     git commit -m "add $PKGBUILD_GZ (build $(Build.BuildId))"
     git push
   displayName: 'Update Cloudyr drat'
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
