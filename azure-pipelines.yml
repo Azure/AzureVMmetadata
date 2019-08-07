@@ -34,6 +34,6 @@ steps:
   displayName: 'Installing package dependencies'
 
 - bash: |
-    Rscript -e "pkgbuild::build(); rcmdcheck::rcmdcheck(dir('..', pat='\\.gz$')[1], args='--no-manual', error_on='warning', check_dir='check')"
+    Rscript -e "pkgbuild::build(); rcmdcheck::rcmdcheck(dir('..', pattern='\\.gz$')[1], args='--no-manual', error_on='warning', check_dir='check')"
   displayName: 'Checking package'
 
