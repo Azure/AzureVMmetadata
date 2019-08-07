@@ -12,7 +12,7 @@ container: $[variables['containerImage']]
 
 steps:
 - bash: |
-    git push --prune https://$(ghPat)@github.com/cloudyr/$(Build.Repository.Name) +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
+    git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
   displayName: 'Copy to Cloudyr'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
 
