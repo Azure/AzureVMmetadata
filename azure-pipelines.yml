@@ -34,7 +34,9 @@ steps:
   displayName: 'Installing package dependencies'
 
 - bash: |
-    Rscript -e "pkgbuild::build(dest_path='$(Build.ArtifactStagingDirectory)')"
-    Rscript -e "rcmdcheck::rcmdcheck(dir('$(Build.ArtifactStagingDirectory)', full.names=TRUE)[1], args='--no-manual', error_on='warning', check_dir='check')"
+    Rscript -e "f <- pkgbuild::build(dest_path='$(Build.ArtifactStagingDirectory)'); rcmdcheck::rcmdcheck(f, args='--no-manual', error_on='warning', check_dir='check'); Sys.setenv(PKGBUILD_GZ=f)"
   displayName: 'Checking package'
 
+- bash: |
+    echo $PKGBUILD_GZ
+  displayName: outfile
