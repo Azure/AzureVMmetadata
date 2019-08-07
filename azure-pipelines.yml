@@ -39,6 +39,7 @@ steps:
   displayName: 'Checking package'
 
 - bash: |
+    echo $(PkgBuild_gz)
     mkdir drat
     cd drat
     git init
