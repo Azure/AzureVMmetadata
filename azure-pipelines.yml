@@ -13,7 +13,7 @@ container: $[variables['containerImage']]
 steps:
 - bash: |
     git push --prune https://$(ghPat)@github.com/cloudyr/$(Build.Repository.Name) +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
-  displayName: 'Copy to Cloudyr'
+  displayName: 'Copying to Cloudyr'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
 
 - bash: |
@@ -49,7 +49,7 @@ steps:
     git remote add upstream "https://$(ghPat)@github.com/cloudyr/cloudyr.github.io.git"
     git fetch upstream
     git checkout master
-    Rscript -e "drat::insertPackage($PKGBUILD_GZ, repodir='./drat')"
+    Rscript -e "drat::insertPackage('$PKGBUILD_GZ', repodir='./drat')"
     git add --all
     git commit -m "add $PKGBUILD_GZ (build $(Build.BuildId))"
   displayName: 'Update Cloudyr drat'
