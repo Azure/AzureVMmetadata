@@ -1,43 +1,55 @@
-trigger:
-- master
-
 variables:
 - group: GH
 - name: R_LIBS_USER
   value: '$(Agent.BuildDirectory)/R/library'
 - name: containerImage
-  value: rocker/rstudio:latest
+  value: 'rocker/rstudio:latest'
 
 pool:
   vmImage: 'ubuntu-latest'
 
-container: rocker/rstudio:latest
+container: $[variables['containerImage']]
 
 steps:
-- script: |
+- bash: |
+    git push --prune https://$(ghPat)@github.com/cloudyr/$(Build.Repository.Name) +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
+  displayName: 'Copy to Cloudyr'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+
+- bash: |
     echo 'options(repos = "https://cloud.r-project.org")' > ~/.Rprofile
-    echo $(R_LIBS_USER)
+    echo ".libPaths(c('$R_LIBS_USER', .libPaths()))" >> ~/.Rprofile
     mkdir -p $(R_LIBS_USER)
   displayName: 'Setup R library directory'
 
-- bash: 'git push --prune https://$(ghPat)@github.com/cloudyr/AzureVMmetadata +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*'
-  displayName: 'Copying to cloudyr'
-
-#- task: CacheBeta@0
-#  inputs:
-#    key: |
-#      ./DESCRIPTION
-#      "$(containerImage)"
-#    path: $(R_LIBS_USER)
-#  displayName: 'Caching packages'
-#  continueOnError: true
+- task: CacheBeta@0
+  inputs:
+    key: ./DESCRIPTION | "$(containerImage)"
+    path: $(R_LIBS_USER)
+  displayName: 'Caching packages'
 
 - bash: |
-    Rscript -e "print(Sys.getenv('R_LIBS_USER'))"
-    Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
+    Rscript -e "install.packages(c('remotes', 'rcmdcheck', 'drat'))"
     Rscript -e "remotes::install_deps(dependencies=TRUE)"
   displayName: 'Installing package dependencies'
 
 - bash: |
-    Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'error', check_dir = 'check')"
+    Rscript -e "f <- pkgbuild::build(dest_path='$(Build.ArtifactStagingDirectory)'); rcmdcheck::rcmdcheck(f, args='--no-manual', error_on='warning', check_dir='check')"
   displayName: 'Checking package'
+
+- bash: |
+    export PKGBUILD_GZ=$(ls $(Build.ArtifactStagingDirectory)/*.gz)
+    mkdir drat
+    cd drat
+    git init
+    git config user.email "dummy@example.com"
+    git config user.name "Azure Pipelines"
+    git remote add upstream "https://$(ghPat)@github.com/cloudyr/cloudyr.github.io.git"
+    git fetch upstream
+    git checkout master
+    Rscript -e "drat::insertPackage('$PKGBUILD_GZ', repodir='./drat')"
+    git add --all
+    git commit -m "add $PKGBUILD_GZ (build $(Build.BuildId))"
+    git push
+  displayName: 'Update Cloudyr drat'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
