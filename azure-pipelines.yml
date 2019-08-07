@@ -34,18 +34,12 @@ steps:
   displayName: 'Installing package dependencies'
 
 - bash: |
-    Rscript -e "rcmdcheck::rcmdcheck(args='--no-manual', error_on='warning', check_dir='check')"
-    Rscript -e 'Sys.setenv(MYVAR="foobar")'
-    echo $MYVAR
-    echo "##vso[task.setvariable variable=sauce]crushed tomatoes"
-    echo "##vso[task.setvariable variable=myvar]$MYVAR"
+    Rscript -e "f <- pkgbuild::build('$(Build.ArtifactStagingDirectory)'); rcmdcheck::rcmdcheck(f, args='--no-manual', error_on='warning', check_dir='check')"
   displayName: 'Checking package'
 
 - bash: |
-    echo $(sauce)
-    echo $SAUCE
-    echo $(myvar)
-    echo $MYVAR
+    export PKGBUILD_GZ=$(ls $(Build.ArtifactStagingDirectory)/*.gz)
+    echo $PKGBUILD_GZ
     mkdir drat
     cd drat
     git init
@@ -57,5 +51,5 @@ steps:
     git checkout master
     Rscript -e "f <- pkgbuild::build('..''); drat::insertPackage(f, repodir='./drat')"
     git add --all
-    git commit -m "add $(PkgBuild_gz) (build $(Build.BuildId))"
+    git commit -m "add $PKGBUILD_GZ (build $(Build.BuildId))"
   displayName: 'Update Cloudyr drat'
