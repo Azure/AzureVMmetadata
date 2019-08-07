@@ -42,14 +42,14 @@ steps:
     mkdir drat
     cd drat
     git init
-    git config user.email "hongooi@microsoft.com"
-    git config user.name "Hong-Revo"
+    git config user.email "dummy@example.com"
+    git config user.name "Azure Pipelines"
     git remote add upstream "https://$(ghPat)@github.com/cloudyr/cloudyr.github.io.git"
     git fetch upstream
     git checkout master
     Rscript -e "drat::insertPackage('$PKGBUILD_GZ', repodir='./drat')"
     git add --all
     git commit -m "add $PKGBUILD_GZ (build $(Build.BuildId))"
-    git push
+    #git push
   displayName: 'Update Cloudyr drat'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
