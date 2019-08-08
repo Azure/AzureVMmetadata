@@ -30,7 +30,7 @@ steps:
   displayName: 'Caching packages'
 
 - bash: |
-    Rscript -e "install.packages(c('remotes', 'rcmdcheck', 'drat'))"
+    Rscript -e "pkgs <- c('remotes', 'rcmdcheck', 'drat'); if(length(find.package(pkgs)) != length(pkgs)) install.packages(pkgs)"
     Rscript -e "remotes::install_deps(dependencies=TRUE)"
   displayName: 'Installing package dependencies'
 
