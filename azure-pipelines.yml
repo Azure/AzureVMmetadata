@@ -3,7 +3,7 @@ variables:
 - name: R_LIBS_USER
   value: '$(Agent.BuildDirectory)/R/library'
 - name: containerImage
-  value: 'rocker/rstudio:latest'
+  value: 'rocker/r-base:latest'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -12,6 +12,7 @@ container: $[variables['containerImage']]
 
 steps:
 - bash: |
+    apt-get update && apt-get install git -y
     export CLOUDYR_REPO=$(echo $(Build.Repository.Name) | sed "s/Azure/cloudyr/")
     git push --prune https://$(ghPat)@github.com/$CLOUDYR_REPO +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
   displayName: 'Copy to Cloudyr'
