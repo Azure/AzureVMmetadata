@@ -3,7 +3,7 @@ variables:
 - name: R_LIBS_USER
   value: '$(Agent.BuildDirectory)/R/library'
 - name: containerImage
-  value: 'rocker/r-base:latest'
+  value: 'rocker/rstudio:latest'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -11,9 +11,6 @@ pool:
 container: $[variables['containerImage']]
 
 steps:
-- bash: apt-get update && apt-get install git -y
-  displayName: 'Install git'
-
 - bash: |
     export CLOUDYR_REPO=$(echo $(Build.Repository.Name) | sed "s/Azure/cloudyr/")
     git push --prune https://$(ghPat)@github.com/$CLOUDYR_REPO +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
@@ -26,11 +23,11 @@ steps:
     mkdir -p $(R_LIBS_USER)
   displayName: 'Setup R library directory'
 
-- task: CacheBeta@0
-  inputs:
-    key: ./DESCRIPTION | "$(containerImage)"
-    path: $(R_LIBS_USER)
-  displayName: 'Caching packages'
+# - task: CacheBeta@0
+#   inputs:
+#     key: ./DESCRIPTION | "$(containerImage)"
+#     path: $(R_LIBS_USER)
+#   displayName: 'Caching packages'
 
 - bash: |
     Rscript -e "pkgs <- c('remotes', 'rcmdcheck', 'drat'); if(length(find.package(pkgs)) != length(pkgs)) install.packages(pkgs)"
