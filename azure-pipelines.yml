@@ -11,8 +11,10 @@ pool:
 container: $[variables['containerImage']]
 
 steps:
+- bash: apt-get update && apt-get install git -y
+  displayName: 'Install git'
+
 - bash: |
-    apt-get update && apt-get install git -y
     export CLOUDYR_REPO=$(echo $(Build.Repository.Name) | sed "s/Azure/cloudyr/")
     git push --prune https://$(ghPat)@github.com/$CLOUDYR_REPO +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
   displayName: 'Copy to Cloudyr'
