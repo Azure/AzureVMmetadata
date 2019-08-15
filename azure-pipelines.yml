@@ -23,7 +23,7 @@ steps:
 
 - task: CacheBeta@0
   inputs:
-    key: ./DESCRIPTION | "$(containerImage)"
+    key: ./DESCRIPTION | "$(cranRepo)"
     path: $R_LIBS_USER
   displayName: 'Caching packages'
 
