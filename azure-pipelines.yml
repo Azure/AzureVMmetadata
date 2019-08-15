@@ -23,8 +23,8 @@ steps:
 
 - task: CacheBeta@0
   inputs:
-    key: ./DESCRIPTION | "$(cranRepo)"
-    path: $R_LIBS_USER
+    key: ./DESCRIPTION | "$(rockerImage)" | "$(cranRepo)"
+    path: $(R_LIBS_USER)
   displayName: 'Caching packages'
 
 - bash: |
