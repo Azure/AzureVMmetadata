@@ -1,5 +1,7 @@
-# AzureVMmetadata
+# AzureVMmetadata <img src="man/figures/logo.png" align="right" width=150 />
 
+[![CRAN](https://www.r-pkg.org/badges/version/AzureVMmetadata)](https://cran.r-project.org/package=AzureVMmetadata)
+![Downloads](https://cranlogs.r-pkg.org/badges/AzureVMmetadata)
 [![Build Status](https://asiadatascience.visualstudio.com/AzureR/_apis/build/status/Azure.AzureVMmetadata?branchName=master)](https://asiadatascience.visualstudio.com/AzureR/_build/latest?definitionId=10&branchName=master)
 
 A simple package to access the [instance metadata service](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service) in an Azure virtual machine.
