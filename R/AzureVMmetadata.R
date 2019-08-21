@@ -32,7 +32,7 @@ ev_api_version <- "2017-11-01"
 #' AzureVMmetadata::instance$compute$name
 #' AzureVMmetadata::instance$compute$vmId
 #'
-#' # VM resource details: subscription, resource group, ID
+#' # VM resource details: subscription, resource group, resource ID
 #' AzureVMmetadata::instance$compute$subscriptionId
 #' AzureVMmetadata::instance$compute$resourceGroupName
 #' AzureVMmetadata::instance$compute$resourceId
@@ -65,7 +65,7 @@ update_instance_metadata <- function()
     res <- try(httr::GET(metadata_host, httr::add_headers(metadata=TRUE)), silent=TRUE)
 
     if(!inherits(res, "response") || res$status_code > 299)
-        return(NULL)
+        return(invisible(NULL))
 
     inst <- httr::content(res)
     for(x in names(inst))
@@ -83,7 +83,7 @@ update_attested_metadata <- function(nonce=NULL)
     res <- try(httr::GET(metadata_host, httr::add_headers(metadata=TRUE)), silent=TRUE)
 
     if(!inherits(res, "response") || res$status_code > 299)
-        return(NULL)
+        return(invisible(NULL))
 
     att <- httr::content(res)
     for(x in names(att))
@@ -101,7 +101,7 @@ update_scheduled_events <- function()
     res <- try(httr::GET(metadata_host, httr::add_headers(metadata=TRUE)), silent=TRUE)
 
     if(!inherits(res, "response") || res$status_code > 299)
-        return(NULL)
+        return(invisible(NULL))
 
     ev <- httr::content(res)
     for(x in names(ev))

@@ -48,7 +48,7 @@ AzureVMmetadata::instance$compute
 AzureVMmetadata::instance$compute$name
 AzureVMmetadata::instance$compute$vmId
 
-# VM resource details: subscription, resource group, ID
+# VM resource details: subscription, resource group, resource ID
 AzureVMmetadata::instance$compute$subscriptionId
 AzureVMmetadata::instance$compute$resourceGroupName
 AzureVMmetadata::instance$compute$resourceId
