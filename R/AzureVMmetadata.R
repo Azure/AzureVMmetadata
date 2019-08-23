@@ -8,12 +8,14 @@ ev_api_version <- "2017-11-01"
 #'
 #' @param nonce For `update_attested_metadata`, an optional string to use as a nonce.
 #' @details
-#' The `instance`, `attested` and `events` objects are environments containing the instance metadata, attested metadata, and scheduled events respectively for a VM running in Azure. `instance` and `attested` are automatically populated when you load the AzureVMmetadata package, or you can manually populate them yourself with the `update_instance_metadata` and `update_attested_metadata` functions. `events` is not populated at package startup, because calling the scheduled event service can require up to several minutes if it is not running already. You can manually populate it with the `update_scheduled_events` function.
+#' The `instance`, `attested` and `events` environments contain the instance metadata, attested metadata, and scheduled events respectively for a VM running in Azure. `instance` and `attested` are automatically populated when you load the AzureVMmetadata package, or you can manually populate them yourself with the `update_instance_metadata` and `update_attested_metadata` functions. `events` is not populated at package startup, because calling the scheduled event service can require up to several minutes if it is not running already. You can manually populate it with the `update_scheduled_events` function.
 #'
 #' If AzureVMmetadata is loaded in an R session that is _not_ running in an Azure VM, all the metadata environments will be empty.
 #'
 #' @return
 #' The updating functions return the contents of their respective environments as lists, invisibly.
+#' @format
+#' `instance`, `attested` and `events` are environments.
 #' @seealso
 #' [in_azure_vm]
 #'

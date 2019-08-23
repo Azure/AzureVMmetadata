@@ -9,7 +9,7 @@
 \alias{update_attested_metadata}
 \alias{update_scheduled_events}
 \title{Metadata for an Azure VM}
-\format{An object of class \code{environment} of length 0.}
+\format{\code{instance}, \code{attested} and \code{events} are environments.}
 \usage{
 instance
 
@@ -33,7 +33,7 @@ The updating functions return the contents of their respective environments as l
 Metadata for an Azure VM
 }
 \details{
-The \code{instance}, \code{attested} and \code{events} objects are environments containing the instance metadata, attested metadata, and scheduled events respectively for a VM running in Azure. \code{instance} and \code{attested} are automatically populated when you load the AzureVMmetadata package, or you can manually populate them yourself with the \code{update_instance_metadata} and \code{update_attested_metadata} functions. \code{events} is not populated at package startup, because calling the scheduled event service can require up to several minutes if it is not running already. You can manually populate it with the \code{update_scheduled_events} function.
+The \code{instance}, \code{attested} and \code{events} environments contain the instance metadata, attested metadata, and scheduled events respectively for a VM running in Azure. \code{instance} and \code{attested} are automatically populated when you load the AzureVMmetadata package, or you can manually populate them yourself with the \code{update_instance_metadata} and \code{update_attested_metadata} functions. \code{events} is not populated at package startup, because calling the scheduled event service can require up to several minutes if it is not running already. You can manually populate it with the \code{update_scheduled_events} function.
 
 If AzureVMmetadata is loaded in an R session that is \emph{not} running in an Azure VM, all the metadata environments will be empty.
 }

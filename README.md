@@ -6,6 +6,12 @@
 
 A simple package to access the [instance metadata service](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service) in an Azure virtual machine.
 
+The primary repo for this package is at https://github.com/Azure/AzureVMmetadata; please submit issues and PRs there. It is also mirrored at the Cloudyr org at https://github.com/cloudyr/AzureVMmetadata. You can install the development version of the package from GitHub:
+
+```r
+devtools::install_github("Azure/AzureVMmetadata")
+```
+
 ## Accessing metadata
 
 AzureVMmetadata exposes three environments that contain the metadata for the VM:
