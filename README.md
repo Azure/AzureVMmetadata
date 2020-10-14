@@ -2,7 +2,7 @@
 
 [![CRAN](https://www.r-pkg.org/badges/version/AzureVMmetadata)](https://cran.r-project.org/package=AzureVMmetadata)
 ![Downloads](https://cranlogs.r-pkg.org/badges/AzureVMmetadata)
-![R-CMD-check](https://github.com/Azure/AzureKeyVault/workflows/R-CMD-check/badge.svg)
+![R-CMD-check](https://github.com/Azure/AzureVMmetadata/workflows/R-CMD-check/badge.svg)
 
 A simple package to access the [instance metadata service](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service) in an Azure virtual machine.
 
