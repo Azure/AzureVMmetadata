@@ -1,8 +1,8 @@
 Package: AzureVMmetadata
 Title: Interface to Azure Virtual Machine Instance Metadata
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
-    person("Hong", "Ooi", , "hongooi@microsoft.com", role = c("aut", "cre")),
+    person("Hong", "Ooi", , "hongooi73@gmail.com", role = c("aut", "cre")),
     person("Microsoft", role="cph")
     )
 Description: A simple interface to the instance metadata for a virtual machine running in Microsoft's 'Azure' cloud. This provides information about the VM's configuration, such as its processors, memory, networking, storage, and so on. Part of the 'AzureR' family of packages.

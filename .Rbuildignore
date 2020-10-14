@@ -9,4 +9,4 @@ CONTRIBUTING.md
 CODE_OF_CONDUCT.md
 drat.sh
 ^LICENSE\.md$
-azure-pipelines.yml
+^\.github$
